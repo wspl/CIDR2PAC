@@ -29,6 +29,5 @@ $ iojs ./
 该 PAC 文件将使国内 IP 网站跳过代理，非国内 IP 网站走 `127.0.0.1:1080` 的代理。
 
 
-Github：
-
-https://raw.githubusercontent.com/wspl/CIDR2PAC/master/whitelist.pac
+Github Raw： https://raw.githubusercontent.com/wspl/CIDR2PAC/master/whitelist.pac
+（可以直接贴到浏览器代理设置的 pac 地址栏中，当然首先得能访问 Github _(:з」∠)_）
