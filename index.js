@@ -34,7 +34,7 @@ ${ips}
 
 function isInside (host) {
   for (var i = 0; i < ipRange.length; i += 1) {
-    if (isInNet(host, ipRange[i][0], ipRange[i][1])) {
+    if (isInNet(dnsResolve(host), ipRange[i][0], ipRange[i][1])) {
       return true;
     }
   }
