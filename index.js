@@ -26,60 +26,85 @@ cidrs.forEach(cidr => {
   }
 })
 
+ipRepo.sort((a, b) => a[0] - b[0]);
+
 var testChinaIp = "123.58.180.8";
-var testNotChinaIp = "216.58.203.4";
+var testNotChinaIp = "46.82.174.68";
 
 var testChinaIpLong = ip.toLong(testChinaIp);
 var testNotChinaIpLong = ip.toLong(testNotChinaIp);
 
-var testIpLong = testNotChinaIp;
-var leftIndex = parseInt(ipRepo.length / 2);
-var rightIndex = leftIndex + 1;
-var leftLong = ipRepo[leftIndex][1];
-var rightLong = ipRepo[rightIndex][0];
+var testIpLong = testNotChinaIpLong;
 
-while (1) {
-  if (testIpLong < leftLong) {
-    leftIndex = parseInt(leftIndex / 2);
-    rightIndex = leftIndex + 1;
-    leftLong = ipRepo[leftIndex][1];
-    rightLong = ipRepo[rightIndex][0];
-    
-    var leftMin = ipRepo[leftIndex][0];
-    console.log('left of:', leftIndex);
-    if (testIpLong > leftMin) {
-      console.log('match!');
+test(testChinaIpLong)
+test(testNotChinaIpLong)
+
+function test(testIpLong) {
+  console.log('\ntesting: ' + ip.fromLong(testIpLong));
+  
+  var startRange = 0;
+  var endRange = ipRepo.length;
+
+  var leftPot = parseInt((startRange + endRange) / 2);
+  var rightPot = leftPot + 1;
+
+  var leftLong = ipRepo[leftPot][1];
+  var rightLong = ipRepo[rightPot][0];
+
+  while (1) {
+    if (testIpLong <= leftLong) {
+      endRange = leftPot;
+      
+      var leftMin = ipRepo[leftPot][0];
+      var leftMax = ipRepo[leftPot][1];
+      console.log('- left of: ', leftPot);
+      if (testIpLong >= leftMin && testIpLong <= leftMax) {
+        console.log(`+ match ${testIpLong} between ${leftMin}, ${leftMax} of index-${leftPot}`);
+        break;
+      }
+      
+      leftPot = parseInt((startRange + endRange) / 2);
+      rightPot = leftPot + 1;
+      leftLong = ipRepo[leftPot][1];
+      rightLong = ipRepo[rightPot][0];
+    } else if (testIpLong >= rightLong) {
+      startRange = rightPot;
+      
+      var rightMin = ipRepo[rightPot][0];
+      var rightMax = ipRepo[rightPot][1];
+      console.log('- right of: ', rightPot);
+      if (testIpLong >= rightMin && testIpLong <= rightMax) {
+        console.log(`+ match ${testIpLong} between ${rightMin}, ${rightMax} of index-${rightPot}`);
+        break;
+      }
+      
+      leftPot = parseInt((startRange + endRange) / 2);
+      rightPot = leftPot + 1;
+      leftLong = ipRepo[leftPot][1];
+      rightLong = ipRepo[rightPot][0];
+    } else {
+      // No match -> Pass proxy
+      console.log('+ no match');
       break;
     }
-  } else if (testIpLong > rightLong) {
-    leftIndex = leftIndex + parseInt(leftIndex / 2);
-    rightIndex = leftIndex + 1;
-    leftLong = ipRepo[leftIndex][1];
-    rightLong = ipRepo[rightIndex][0];
-    
-    var rightMax = ipRepo[rightIndex][1];
-    console.log('right of:', leftIndex);
-    if (testIpLong < rightMax) {
-      console.log('match!');
-      break;
-    }
-  } else {
-    // No match -> Pass proxy
-    console.log('no match');
-    break;
   }
 }
 
 let ipsStr = '';
-const addIp = (start, end) => ipsStr += `  [${start}, ${end}], \n`;
+const addIpInt = (start, end) => ipsStr += `  [${start}, ${end}], \n`;
+const addIpCIDR = (cidr) => ipsStr += `  [${ip.toLong(ip.cidrSubnet(cidr).firstAddress)}, ${ip.toLong(ip.cidrSubnet(cidr).lastAddress)}], \n`;
 
-ipRepo.forEach(ipRange => addIp(ipRange[0], ipRange[1]));
+addIpCIDR('10.0.0.0/8');
+addIpCIDR('127.0.0.1/32');
+addIpCIDR('100.64.0.0/10');
+addIpCIDR('172.16.0.0/12');
+addIpCIDR('192.168.0.0/16');
 
-//console.log(ipsStr);
+ipRepo.forEach(ipRange => addIpInt(ipRange[0], ipRange[1]));
+
 Object.assign(String.prototype, {
   applyTemplate(key, content) {
-    return this
-      .replace(new RegExp(`\{\#${key}\}`, 'g'), content);
+    return this.replace(new RegExp(`\{\#${key}\}`, 'g'), content);
   }
 });
 
@@ -89,4 +114,4 @@ var pacContent = pacTemplateFile
 
 fs.writeFileSync(DIST_PAC_PATH, pacContent);
 
-// console.log('All done!');\
+console.log('\nTest Done / Generated');
