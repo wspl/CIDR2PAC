@@ -13,7 +13,7 @@ http://www.ipdeny.com/ipblocks/data/aggregated/cn-aggregated.zone
 
 ```sh
 # 安装 node 6+ 与 npm
-# 根据需求修改 index.js 文件中的 CIDR_PATH / PAC_PATH / PROXY 三个常量
+# 根据需求修改 index.js 文件中的 CIDR_PATH / DIST_PAC_PATH / PROXY 三个常量
 
 git clone https://github.com/wspl/CIDR2PAC.git
 cd ./CIDR2PAC
