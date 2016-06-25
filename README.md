@@ -12,15 +12,15 @@ http://www.ipdeny.com/ipblocks/data/aggregated/cn-aggregated.zone
 ## 使用姿势
 
 ```sh
-# 安装 io.js 与 npm
+# 安装 node 6+ 与 npm
 # 根据需求修改 index.js 文件中的 CIDR_PATH / PAC_PATH / PROXY 三个常量
 
 git clone https://github.com/wspl/CIDR2PAC.git
 cd ./CIDR2PAC
 npm install
-iojs ./
+node ./
 
-# 然后就可以在 PAC_PATH 对应目录找到你的 PAC 文件。
+# 然后就可以在 DIST_PAC_PATH 对应目录找到你的 PAC 文件。
 ```
 
 
