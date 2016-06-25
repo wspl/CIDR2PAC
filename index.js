@@ -13,7 +13,7 @@ const pacTemplateFile = fs.readFileSync(TEMPLATE_PAC_PATH).toString();
 
 const ipRepo = [];
 
-cidrs.forEach(cidr => {
+const addCIDR = cidr => {
   if (cidr) {
     const cidrData = ip.cidrSubnet(cidr);
     const ipStrStart = cidrData.firstAddress;
@@ -24,23 +24,25 @@ cidrs.forEach(cidr => {
     
     ipRepo.push([ipLongStart, ipLongEnd]);
   }
-})
+};
+
+cidrs.forEach(addCIDR)
+
+addCIDR('10.0.0.0/8');
+addCIDR('127.0.0.1/32');
+addCIDR('100.64.0.0/10');
+addCIDR('172.16.0.0/12');
+addCIDR('192.168.0.0/16');
 
 ipRepo.sort((a, b) => a[0] - b[0]);
 
-var testChinaIp = "123.58.180.8";
-var testNotChinaIp = "46.82.174.68";
+test('192.168.55.32') // Local
+test('123.58.180.8') // China Netease
+test('46.82.174.68') // Hongkong Google
 
-var testChinaIpLong = ip.toLong(testChinaIp);
-var testNotChinaIpLong = ip.toLong(testNotChinaIp);
-
-var testIpLong = testNotChinaIpLong;
-
-test(testChinaIpLong)
-test(testNotChinaIpLong)
-
-function test(testIpLong) {
-  console.log('\ntesting: ' + ip.fromLong(testIpLong));
+function test(testIp) {
+  console.log('\ntesting: ' + testIp);
+  var testIpLong = ip.toLong(testIp);
   
   var startRange = 0;
   var endRange = ipRepo.length;
@@ -92,13 +94,6 @@ function test(testIpLong) {
 
 let ipsStr = '';
 const addIpInt = (start, end) => ipsStr += `  [${start}, ${end}], \n`;
-const addIpCIDR = (cidr) => ipsStr += `  [${ip.toLong(ip.cidrSubnet(cidr).firstAddress)}, ${ip.toLong(ip.cidrSubnet(cidr).lastAddress)}], \n`;
-
-addIpCIDR('10.0.0.0/8');
-addIpCIDR('127.0.0.1/32');
-addIpCIDR('100.64.0.0/10');
-addIpCIDR('172.16.0.0/12');
-addIpCIDR('192.168.0.0/16');
 
 ipRepo.forEach(ipRange => addIpInt(ipRange[0], ipRange[1]));
 
