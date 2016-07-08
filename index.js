@@ -105,7 +105,8 @@ Object.assign(String.prototype, {
 
 var pacContent = pacTemplateFile
   .applyTemplate('ipRepo', ipsStr)
-  .applyTemplate('date', new Date().toUTCString());
+  .applyTemplate('date', new Date().toUTCString())
+  .applyTemplate('proxy', PROXY);
 
 fs.writeFileSync(DIST_PAC_PATH, pacContent);
 
