@@ -1,5 +1,6 @@
 const fs = require('fs');
 const ip = require('ip');
+const package = require('./package.json')
 
 const CIDR_PATH = './cn-aggregated.zone.txt';
 const TEMPLATE_PAC_PATH = './whitelist_template.pac';
@@ -106,7 +107,8 @@ Object.assign(String.prototype, {
 var pacContent = pacTemplateFile
   .applyTemplate('ipRepo', ipsStr)
   .applyTemplate('date', new Date().toUTCString())
-  .applyTemplate('proxy', PROXY);
+  .applyTemplate('proxy', PROXY)
+  .applyTemplate('version', package.version);
 
 fs.writeFileSync(DIST_PAC_PATH, pacContent);
 

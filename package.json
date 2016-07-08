@@ -1,6 +1,6 @@
 {
   "name": "cidr2pac",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "A es6 script for covering CIDRs list to PAC proxy script.",
   "main": "index.js",
   "dependencies": {
