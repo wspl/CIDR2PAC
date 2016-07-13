@@ -5,6 +5,7 @@
  * More informations: https://github.com/wspl/CIDR2PAC
  */
 
+var cache = {};
 var ipRepo = [{#ipRepo}];
 
 function ipToLong(ip) {
@@ -66,8 +67,15 @@ function isInside(host) {
   }
 }
 
+function isInsideCache(host) {
+    if (!cache[host]) {
+        cache[host] = isInside(host);
+    }
+    return cache[host];
+}
+
 function FindProxyForURL(url, host) {
-  if (isInside(host)) {
+  if (isInsideCache(host)) {
     return 'DIRECT';
   } else {
     return 'PROXY {#proxy}';
