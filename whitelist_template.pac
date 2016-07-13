@@ -18,7 +18,11 @@ function ipToLong(ip) {
 }
 
 function isInside(host) {
-  var testIpLong = ipToLong(dnsResolve(host));
+  var ip = dnsResolve(host);
+  if (!ip) {
+    return false;
+  }
+  var testIpLong = ipToLong(ip);
 
   var startRange = 0;
   var endRange = ipRepo.length;
