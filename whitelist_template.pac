@@ -78,6 +78,6 @@ function FindProxyForURL(url, host) {
   if (isInsideCache(host)) {
     return 'DIRECT';
   } else {
-    return 'PROXY {#proxy}';
+    return '{#proxy}';
   }
 }
