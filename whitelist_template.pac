@@ -67,15 +67,15 @@ function isInside(host) {
   }
 }
 
-function isInsideCache(host) {
-    if (!cache[host]) {
-        cache[host] = isInside(host);
-    }
-    return cache[host];
+function isInsideCached(host) {
+  if (typeof cache[host] === 'undefined') {
+    cache[host] = isInside(host);
+  }
+  return cache[host];
 }
 
 function FindProxyForURL(url, host) {
-  if (isInsideCache(host)) {
+  if (isInsideCached(host)) {
     return 'DIRECT';
   } else {
     return '{#proxy}';
