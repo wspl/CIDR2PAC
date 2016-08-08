@@ -68,10 +68,10 @@ function isInside(host) {
 }
 
 function isInsideCached(host) {
-    if (typeof cache[host] === 'undefined') {
-        cache[host] = isInside(host);
-    }
-    return cache[host];
+  if (typeof cache[host] === 'undefined') {
+    cache[host] = isInside(host);
+  }
+  return cache[host];
 }
 
 function FindProxyForURL(url, host) {
