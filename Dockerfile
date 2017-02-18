@@ -13,5 +13,5 @@ RUN curl -fsSk -o cn-aggregated.zone.txt http://www.ipdeny.com/ipblocks/data/agg
   && mv whitelist.pac index.html
 
 
-EXPOSE ["8080"]
+EXPOSE 8080
 ENTRYPOINT ["/usr/local/bin/http-server", "/var/tmp/"]
