@@ -1,8 +1,6 @@
 FROM node:6
 MAINTAINER Jiahao Dai <jiahao.dai@hypers.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-
 ADD index.js /var/tmp/index.js
 ADD package.json /var/tmp/package.json
 ADD whitelist_template.pac /var/tmp/whitelist_template.pac
@@ -15,5 +13,5 @@ RUN curl -fsSk -o cn-aggregated.zone.txt http://www.ipdeny.com/ipblocks/data/agg
   && mv whitelist.pac index.html
 
 
-PORT 8080
+EXPOSE ["8080"]
 ENTRYPOINT ["/usr/local/bin/http-server", "/var/tmp/"]
