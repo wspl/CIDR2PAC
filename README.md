@@ -21,7 +21,7 @@ cd ./CIDR2PAC
 npm install
 node ./
 
-# 然后就可以在 **DIST_PAC_PATH** 找到你的 PAC 文件。
+# 然后就可以在 DIST_PAC_PATH 找到你的 PAC 文件。
 ```
 
 * 编译运行镜像
@@ -34,16 +34,16 @@ cd ./CIDR2PAC
 docker build -t tools/cidr2pac .
 docker run -d -p 8123:8080 tools/cidr2pac
 curl -o my.pac http://127.0.0.1:8123
-# 目录下的 **my.pac** 就是你的 PAC 文件
+# 目录下的 my.pac 就是你的 PAC 文件
 ```
 
-* 公有 CaaS
+* 公有 CaaS (Container as a Service)
 ```sh
 # CaaS的平台帐号 国内如：alauda.cn daocloud.io(首字母顺序)
-# 复制git地址，或者fork本项目。在CaaS平台上创建本项目为源码的**构建仓库**。
+# 复制git地址，或者fork本项目。在CaaS平台上创建本项目为源码的构建仓库。
 # 手动执行构建
 # 待完成构建后，将构建的镜像执行为一个运行容器。
-# 访问容器的IP或域名，注意默认端口(8080)可能会被CaaS映射为其他端口。
+# 访问容器的IP或域名，注意默认端口(8080)可能会被CaaS映射为其他端口。(如daocloud 自动转发到80)
 ```
 
 ## 镜像
@@ -55,4 +55,4 @@ Github Raw： https://rawgit.com/wspl/CIDR2PAC/master/whitelist.pac
 （可以直接贴到浏览器代理设置的 pac 地址栏中，当然首先得能访问 Github \_(:з」∠)\_）
 
 
-Docker Container:  http://whitelist-cn-pac.daoapp.io/
+Container:  http://whitelist-cn-pac.daoapp.io/
